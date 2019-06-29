@@ -41,7 +41,11 @@ function isNotPrime () {
 function newPrime () {
     primeContestant = Math.floor(Math.random() * 5000);
     if (primeContestant % 2 == 0) {
-        primeContestant +=1;
-    }
+        newPrime();
+    } else if ((primeContestant % 3 == 0)) {
+        newPrime();
+    } else if ((primeContestant % 5 == 0)) {
+        newPrime();
+    } 
     document.getElementById("primer").innerHTML = primeContestant;
 }
