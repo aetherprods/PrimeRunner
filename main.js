@@ -1,11 +1,7 @@
-let primeContestant = Math.floor(Math.random() * 5000);
-if (primeContestant % 2 == 0) {
-    primeContestant +=1;
-}
-
+let primeContestant = 1;
 
 $( document ).ready(function() {
-    
+    newPrime();
     document.getElementById("primer").innerHTML = primeContestant;
 
 });
@@ -44,5 +40,8 @@ function isNotPrime () {
 
 function newPrime () {
     primeContestant = Math.floor(Math.random() * 5000);
+    if (primeContestant % 2 == 0) {
+        primeContestant +=1;
+    }
     document.getElementById("primer").innerHTML = primeContestant;
 }
