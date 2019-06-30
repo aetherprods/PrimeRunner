@@ -10,15 +10,21 @@
         <title>Prime Runner</title>
     </head>
    <body>
-      <form>
-          <div class="absolute-center">
-            <p>Is it prime?</p>
-            <p id="primer"></p>
+        <div class="absolute-center" align="center">
+        <h2 id="timer"></h2>
+        <h1 id="last-result" align="center"></h1>
+        <br>
+        <p align="center">Is it prime?</p>
+        <p id="primer" align="center"></p>
 
-            <input type="button" value="Yes" onclick="isPrime()"/>
-            <input type="button" value="No" onclick="isNotPrime()"/>
-          </div>
-      </form>
+        <input type="button" value="Yes" onclick="isPrime()"/>
+        <input type="button" value="No" onclick="isNotPrime()"/>
+        
+        <br><br>
+        <p align="center">Score:</p>
+        <p id="counter" align="center">0</p>
+        </div>
+      
       
    </body>
 </html>
