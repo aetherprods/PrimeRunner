@@ -1,9 +1,5 @@
 $( document ).ready(function() {
-
     gameStart();
-
-    
-
 });
 
 
@@ -38,7 +34,7 @@ countingTimer.prototype.start = function(duration) {
 
 countingTimer.prototype.stopTimer = function() {
     clearInterval(timeInterval);
-    primeGame.stopGame();
+    game.stopGame();
 }
 
 countingTimer.prototype.parse = function(time) {
