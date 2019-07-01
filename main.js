@@ -6,7 +6,7 @@
 
 $( document ).ready(function() {
 
-    game = new game(300);
+    game = new game(30);
 
 });
 
@@ -51,7 +51,6 @@ timer.prototype.start = (duration) => {
             if (--time < 0) {
                 timer.running = false;
                 timer.stopTimer();
-                game.stopGame();
             }
         }, 100);
     }
@@ -59,7 +58,7 @@ timer.prototype.start = (duration) => {
 
 timer.prototype.stopTimer = () => {
     clearInterval(timeInterval);
-
+    game.stopGame();
 }
 
 timer.prototype.parse = (seconds) => {
