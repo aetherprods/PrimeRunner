@@ -84,6 +84,7 @@ primeGame.prototype.startGame = function() {
     that.score = 0;
     that.running = true;
     that.newPrime();
+    document.getElementById("counter").innerHTML = that.score;
 }
 
 primeGame.prototype.stopGame = function() {
@@ -91,6 +92,7 @@ primeGame.prototype.stopGame = function() {
     alert("game over");
     that.score = 0;
     that.running = false;
+
     document.getElementById("last-result").innerHTML = "";
     document.getElementById("last-result").style.backgroundColor = "white";
 }
@@ -133,9 +135,9 @@ primeGame.prototype.submitAnswer = function(answer) {
             document.getElementById("last-result").style.backgroundColor = "red";
             that.counter("incorrect");
         }
-    }
 
-    game.newPrime();
+        game.newPrime();
+    }
 }
 
 primeGame.prototype.newPrime = function() {
