@@ -7,7 +7,7 @@ const express = require('express')
 
 
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_76n6c1p1:G`7vyajtrW'G_(23@ds245927.mlab.com:45927/heroku_76n6c1p1");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_76n6c1p1:Gf7vyajtrWdfgG6854sdrfg23@ds245927.mlab.com:45927/heroku_76n6c1p1");
 
 app.get('/', (req, res) => {res.sendFile(__dirname + "/main.html")});
 //app.use(express.static(__dirname + "/public"));
