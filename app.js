@@ -1,8 +1,7 @@
 
-const $ = require('jquery'),
-      express = require('express'),
+const express = require('express'),
+      port = process.env.PORT || 3000;
       app = express(),
-      port = 3000;
 
 app.get('/poop', (req, res) => res.send("Hello World!"));
 app.get('/', (req, res) => {
