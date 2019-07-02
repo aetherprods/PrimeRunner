@@ -1,14 +1,27 @@
 {
-    "author": "AEP",
-    "name": "primerunner",
-    "description": "A prime number game",
-    "main": "app.js",
-    "scripts": {
-        "start": "node app.js"
-    },
-    "license": "MIT",
-    "dependencies": {
-        "express": "^4.17.1",
-        "jquery": "^3.4.1"
-    }
+  "author": "AEP",
+  "name": "primerunner",
+  "version": "1.0.0",
+  "description": "A prime number game",
+  "engines": {
+    "node": "10.x"
+  },
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jquery": "^3.4.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aetherprods/PrimeRunner.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aetherprods/PrimeRunner/issues"
+  },
+  "homepage": "https://github.com/aetherprods/PrimeRunner#readme"
 }
