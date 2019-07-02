@@ -1,11 +1,18 @@
 $( document ).ready(function() {
-    gameStart();
+    game = new primeGame();
+    timer = new countingTimer(300, game);
+    
+    document.querySelector('#timer').textContent = timer.parse(30);
+    document.querySelector('#startButton').addEventListener('click', () => gameStart());
+    document.querySelector('#isPrime').addEventListener('click', () => game.isPrime());
+    document.querySelector('#isNotPrime').addEventListener('click', () => game.isNotPrime());
+    game.newPrime();
 });
 
 
 
-function countingTimer(duration) {
-    
+function countingTimer(duration, gameInstance) {
+    this.game = gameInstance;
     this.duration = duration;
     this.running = false;
     this.timeInterval;
@@ -32,9 +39,14 @@ countingTimer.prototype.start = function(duration) {
     }
 }
 
+countingTimer.prototype.start.prototype.poop = function () {
+
+}
+
 countingTimer.prototype.stopTimer = function() {
+    let that = this;
     clearInterval(timeInterval);
-    game.stopGame();
+    that.game.stopGame();
 }
 
 countingTimer.prototype.parse = function(time) {
@@ -63,17 +75,15 @@ function primeGame() {
 
 primeGame.prototype.startGame = function() {
     let that = this;
-    document.querySelector('#isPrime').addEventListener('click', () => that.isPrime());
-    document.querySelector('#isNotPrime').addEventListener('click', () => that.isNotPrime());
     that.score = 0;
+    that.running = true;
 }
 
 primeGame.prototype.stopGame = function() {
     let that = this;
     alert("game over");
-    document.querySelector('#isPrime').removeEventListener('click', () => that.isPrime());
-    document.querySelector('#isNotPrime').removeEventListener('click', () => that.isNotPrime());
-    gameStart();
+    that.score = 0;
+    that.running = false;
 }
 
 primeGame.prototype.counter = function(outcome) {
@@ -101,30 +111,35 @@ primeGame.prototype.checkforPrimeness = function(num) {
 
 primeGame.prototype.isPrime = function() {
     let that = this;
-    if (that.checkforPrimeness(that.primeContestant) == true) {
-        document.getElementById("last-result").innerHTML = "Correct!";
-        document.getElementById("last-result").style.backgroundColor = "green";
-        that.counter("correct");
-    } else {
-        document.getElementById("last-result").innerHTML = "Incorrect!";
-        document.getElementById("last-result").style.backgroundColor = "red";
-        that.counter("incorrect");
-    }
-    that.newPrime();
+
+    if (that.running == true) {
+        if (that.checkforPrimeness(that.primeContestant) == true) {
+            document.getElementById("last-result").innerHTML = "Correct!";
+            document.getElementById("last-result").style.backgroundColor = "green";
+            that.counter("correct");
+        } else {
+            document.getElementById("last-result").innerHTML = "Incorrect!";
+            document.getElementById("last-result").style.backgroundColor = "red";
+            that.counter("incorrect");
+        }
+        that.newPrime();
+    };
 }
 
 primeGame.prototype.isNotPrime = function() {
     let that = this;
-    if (that.checkforPrimeness(that.primeContestant) == false) {
-        document.getElementById("last-result").innerHTML = "Correct!";
-        document.getElementById("last-result").style.backgroundColor = "green";
-        that.counter("correct");
-    } else {
-        document.getElementById("last-result").innerHTML = "Incorrect!";
-        document.getElementById("last-result").style.backgroundColor = "red";
-        that.counter("incorrect");
-    }
-    that.newPrime();
+    if (that.running == true) {
+        if (that.checkforPrimeness(that.primeContestant) == false) {
+            document.getElementById("last-result").innerHTML = "Correct!";
+            document.getElementById("last-result").style.backgroundColor = "green";
+            that.counter("correct");
+        } else {
+            document.getElementById("last-result").innerHTML = "Incorrect!";
+            document.getElementById("last-result").style.backgroundColor = "red";
+            that.counter("incorrect");
+        }
+        that.newPrime();
+    };
 }
 
 primeGame.prototype.newPrime = function() {
@@ -144,15 +159,6 @@ primeGame.prototype.newPrime = function() {
 
 
 function gameStart() {
-
-    
-    game = new primeGame();
-    timer = new countingTimer(30);
-    
-    document.querySelector('#timer').textContent = timer.parse(30);
-    
-    document.querySelector('#startButton').addEventListener('click', () => {
-        timer.start(30)
-        game.startGame();
-    });
+    timer.start(timer.duration)
+    game.startGame();
 }
