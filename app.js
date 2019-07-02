@@ -1,10 +1,13 @@
-const express = require('express'),
+const express = require('express')
       path = require('path')
-      port = process.env.PORT || 3000,
+      mongoose = require('mongoose')
+      port = process.env.PORT || 3000
       app = express();
 
-app.get('/poop', (req, res) => res.send("Hello World!"));
+mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_76n6c1p1:u0t3c6j9bqa5c6e6ikbsprtooj@ds245927.mlab.com:45927/heroku_76n6c1p1");
+
 app.get('/', (req, res) => {res.sendFile(__dirname + "/main.html")});
 //app.use(express.static(__dirname + "/public"));
 app.use(express.static(path.join(__dirname, "/")));
 app.listen(port, () => console.log("i am zord"));
+
