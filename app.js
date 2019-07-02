@@ -7,7 +7,7 @@ const express = require('express')
 
 
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_76n6c1p1:Gf7vyajtrWdfgG6854sdrfg23@ds245927.mlab.com:45927/heroku_76n6c1p1");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://heroku_76n6c1p1:u0t3c6j9bqa5c6e6ikbsprtooj@ds245927.mlab.com:45927/heroku_76n6c1p1");
 
 app.get('/', (req, res) => {res.sendFile(__dirname + "/main.html")});
 //app.use(express.static(__dirname + "/public"));
@@ -20,7 +20,7 @@ let data=[
     {"b": 2},
     {"c": 3},
 ]
-let uri = "mongodb://heroku_76n6c1p1:Gf7vyajtrWdfgG6854sdrfg23@ds245927.mlab.com:45927/heroku_76n6c1p1" 
+let uri = "mongodb://heroku_76n6c1p1:u0t3c6j9bqa5c6e6ikbsprtooj@ds245927.mlab.com:45927/heroku_76n6c1p1" 
 
 mongodb.MongoClient.connect(uri, (err, client) => {
     if(err) throw err;
