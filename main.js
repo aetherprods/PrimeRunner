@@ -5,6 +5,12 @@ todo:
 
 */
 
+const $ = require('jquery'),
+      express = require('express'),
+      app = express(),
+      port = 3000;
+
+
 $( document ).ready(function() {
     game = new primeGame();
     timer = new countingTimer(300, game);
@@ -13,6 +19,10 @@ $( document ).ready(function() {
     document.querySelector('#startButton').addEventListener('click', () => gameStart());
     document.querySelector('#isPrime').addEventListener('click', () => game.submitAnswer("yes"));
     document.querySelector('#isNotPrime').addEventListener('click', () => game.submitAnswer("no"));
+
+    app.get('/poop', (req, res) => res.send("Hello World!"));
+    app.get('/', (req, res) => res.send("Hello World!"));
+    app.listen(port, () => console.log("i am zord"));
 });
 
 
