@@ -2,7 +2,7 @@
     "author": "AEP",
     "name": "primerunner",
     "description": "A prime number game",
-    "main": "main.js",
+    "main": "app.js",
     "scripts": {
         "start": "node app.js"
     },
