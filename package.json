@@ -1,6 +1,12 @@
 {
     "author": "AEP",
     "name": "primerunner",
+    "description": "A prime number game",
+    "main": "main.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "license": "MIT",
     "dependencies": {
         "express": "^4.17.1",
         "jquery": "^3.4.1"
