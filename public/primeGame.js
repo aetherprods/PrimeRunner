@@ -8,10 +8,9 @@ todo:
 
 
 
-
 $( document ).ready(function() {
     game = new primeGame();
-    timer = new countingTimer(300, game);
+    timer = new countingTimer(30, game);
     
     document.querySelector('#timer').textContent = timer.parse(timer.duration);
     document.querySelector('#startButton').addEventListener('click', () => gameStart());
@@ -51,9 +50,6 @@ countingTimer.prototype.start = function() {
     }
 }
 
-countingTimer.prototype.start.prototype.poop = function () {
-
-}
 
 countingTimer.prototype.stopTimer = function() {
     let that = this;
@@ -96,11 +92,17 @@ primeGame.prototype.startGame = function() {
 primeGame.prototype.stopGame = function() {
     let that = this;
     alert("game over");
+    that.postScore("bobby", that.score);
     that.score = 0;
     that.running = false;
 
     document.getElementById("last-result").innerHTML = "";
     document.getElementById("last-result").style.backgroundColor = "white";
+}
+
+primeGame.prototype.postScore = function(username, score) {
+    alert(username+":"+score);
+    window.location.replace = "./poop"
 }
 
 primeGame.prototype.counter = function(outcome) {
