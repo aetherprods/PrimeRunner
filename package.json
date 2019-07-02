@@ -6,9 +6,9 @@
   "engines": {
     "node": "10.x"
   },
-  "main": "main.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "node app.js"
   },
   "license": "MIT",
   "dependencies": {
