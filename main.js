@@ -7,9 +7,9 @@ todo:
 
 $( document ).ready(function() {
     game = new primeGame();
-    timer = new countingTimer(30, game);
+    timer = new countingTimer(300, game);
     
-    document.querySelector('#timer').textContent = timer.parse(30);
+    document.querySelector('#timer').textContent = timer.parse(timer.duration);
     document.querySelector('#startButton').addEventListener('click', () => gameStart());
     document.querySelector('#isPrime').addEventListener('click', () => game.submitAnswer("yes"));
     document.querySelector('#isNotPrime').addEventListener('click', () => game.submitAnswer("no"));
@@ -142,16 +142,16 @@ primeGame.prototype.submitAnswer = function(answer) {
 
 primeGame.prototype.newPrime = function() {
     let that = this;
-    that.primeContestant = Math.floor(Math.random() * 25000);
+    that.primeContestant = Math.floor(Math.random() * 2500);
     if (that.primeContestant % 2 == 0) {
         that.newPrime();
     } else if ((that.primeContestant % 3 == 0)) {
         that.newPrime();
     } else if ((that.primeContestant % 5 == 0)) {
         that.newPrime();
-    } else if ((that.primeContestant % 7 == 0)) {
+    } /*else if ((that.primeContestant % 7 == 0)) {
         that.newPrime();
-    } 
+    } */
     document.getElementById("primer").innerHTML = that.primeContestant;
 }
 
