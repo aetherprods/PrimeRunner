@@ -10,6 +10,10 @@ const $ = require('jquery'),
       app = express(),
       port = 3000;
 
+app.get('/poop', (req, res) => res.send("Hello World!"));
+app.get('/', (req, res) => res.send("Hello World!"));
+app.listen(port, () => console.log("i am zord"));
+
 
 $( document ).ready(function() {
     game = new primeGame();
@@ -20,9 +24,7 @@ $( document ).ready(function() {
     document.querySelector('#isPrime').addEventListener('click', () => game.submitAnswer("yes"));
     document.querySelector('#isNotPrime').addEventListener('click', () => game.submitAnswer("no"));
 
-    app.get('/poop', (req, res) => res.send("Hello World!"));
-    app.get('/', (req, res) => res.send("Hello World!"));
-    app.listen(port, () => console.log("i am zord"));
+   
 });
 
 
