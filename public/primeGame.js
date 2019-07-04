@@ -17,7 +17,6 @@ $( document ).ready(function() {
     document.querySelector('#isPrime').addEventListener('click', () => game.submitAnswer("yes"));
     document.querySelector('#isNotPrime').addEventListener('click', () => game.submitAnswer("no"));
 
-   
 });
 
 
@@ -27,7 +26,6 @@ function countingTimer(duration, gameInstance) {
     this.duration = duration;
     this.running = false;
     this.timeInterval;
-    
 }
 
 countingTimer.prototype.start = function() {
@@ -79,6 +77,7 @@ function primeGame() {
     this.primeContestant;
     this.score;
     this.running = false;
+    this.username = "bobby";
 }
 
 primeGame.prototype.startGame = function() {
@@ -91,19 +90,28 @@ primeGame.prototype.startGame = function() {
 
 primeGame.prototype.stopGame = function() {
     let that = this;
-    alert("game over");
-    that.postScore("bobby", that.score);
-    that.score = 0;
-    that.running = false;
 
-    document.getElementById("last-result").innerHTML = "";
-    document.getElementById("last-result").style.backgroundColor = "white";
+    //get username
+    that.username = window.prompt("Enter your username:");
+
+    //post score to leaderboard
+    $.post('/postScore', { "score": that.score, "username": that.username });
+    window.location.href 
+    //show high scores
+
+    
+    that.reinitializeValues();
+    
 }
 
-primeGame.prototype.postScore = function(username, score) {
-    alert(username+":"+score);
-    window.location.href = `./postScore?username=${username}&score=${score}`
-    window.location.href = `./getHighScore`
+primeGame.prototype.reinitializeValues = function () {
+    let that = this;
+
+    that.score = 0;
+    that.running = false;
+    document.getElementById("last-result").innerHTML = "";
+    document.getElementById("last-result").style.backgroundColor = "white";
+    document.getElementById("counter").innerHTML = that.score;
 }
 
 primeGame.prototype.counter = function(outcome) {
