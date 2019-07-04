@@ -6,7 +6,7 @@ const express = require('express'),
     bodyParser = require('body-parser');
 
 //variables
-let testport = 3000,
+let port = process.env.PORT,
     uri = process.env.MONGODB_URI,
     database = process.env.DATABASE,
     testuri = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb",
@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 
 
 //start the server
-app.listen(testport, () => console.log("i am zord"));
+app.listen(port, () => console.log("i am zord"));
 
 //connect to the database
 (async () => {
