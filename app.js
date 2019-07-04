@@ -62,6 +62,6 @@ app.post('/postScore', function (req, res) {
 //serve up list of high scores
 app.get('/getHighScore', (req, res) => {
     //populate highscoreArray
-    highscoreDB.find().sort({ score: -1 }).toArray((err, result) => {highscoreArray = Array.from(result)});
+    highscoreDB.find().sort({ score: -1 }).toArray((err, result) => {highscoreArray = console.log(Array.from(result))});
     res.send(highscoreArray);
 });
