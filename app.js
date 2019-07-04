@@ -27,7 +27,7 @@ app.listen(port, () => console.log("i am zord"));
 (async () => {
     db = await mongodb.MongoClient.connect(uri || testuri, { useNewUrlParser: true }, (err, client) => {
         if(err) throw err;
-        db = client.db(database);
+        db = client.db(`${database}`);
         highscoreDB = db.collection('highscores');
     });
 })();
@@ -62,6 +62,6 @@ app.post('/postScore', function (req, res) {
 //serve up list of high scores
 app.get('/getHighScore', (req, res) => {
     //populate highscoreArray
-    highscoreArray = highscoreDB.find().sort({ score: -1 });
-    res.send(highscoreArray.toArray((err, result) => {console.log(Array.from(result))}));
+    highscoreDB.find().sort({ score: -1 }).toArray((err, result) => {highscoreArray = Array.from(result)});
+    res.send(highscoreArray);
 });
