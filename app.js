@@ -25,10 +25,9 @@ app.listen(testport, () => console.log("i am zord"));
 
 //connect to the database
 (async () => {
-    //let client = await MongoClient.connect(testuri, { useNewUrlParser: true });
-    db = await mongodb.MongoClient.connect(testuri || uri, { useNewUrlParser: true }, (err, client) => {
+    db = await mongodb.MongoClient.connect(uri || testuri, { useNewUrlParser: true }, (err, client) => {
         if(err) throw err;
-        db = client.db('local' || database);
+        db = client.db(database);
         highscoreDB = db.collection('highscores');
     });
 })();

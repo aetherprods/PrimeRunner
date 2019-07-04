@@ -10,7 +10,7 @@ todo:
 
 $( document ).ready(function() {
     game = new primeGame();
-    timer = new countingTimer(30, game);
+    timer = new countingTimer(300, game);
     
     document.querySelector('#timer').textContent = timer.parse(timer.duration);
     document.querySelector('#startButton').addEventListener('click', () => gameStart());
