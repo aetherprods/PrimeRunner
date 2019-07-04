@@ -1,7 +1,0 @@
-{
-    "author": "AEP",
-    "name": "primerunner",
-    "dependencies": {
-        "jquery": "^3.4.1"
-    }
-}

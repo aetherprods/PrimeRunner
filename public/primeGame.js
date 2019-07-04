@@ -102,7 +102,8 @@ primeGame.prototype.stopGame = function() {
 
 primeGame.prototype.postScore = function(username, score) {
     alert(username+":"+score);
-    window.location.replace = "./poop"
+    window.location.href = `./postScore?username=${username}&score=${score}`
+    window.location.href = `./getHighScore`
 }
 
 primeGame.prototype.counter = function(outcome) {
