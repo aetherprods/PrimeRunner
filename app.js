@@ -38,7 +38,22 @@ app.use(express.static(path.join(__dirname, "/")));
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/main.html");
 
+
+    //populate highscoreArray
+    (async function populate() {
+        //start a new array
+        highscoreArray.length = 0;
+        
+        let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
+        for (let i=0; i<tempArray.length; i++) {
+            let name = tempArray[i]['name'];
+            let score = tempArray[i]['score'];
+            highscoreArray.push({ name: name, score: score })
+        };
+    })();
 });
+
+let result;
 
 //method to post new score to leaderboard db
 app.post('/postScore', function (req, res) {
@@ -58,45 +73,49 @@ app.post('/postScore', function (req, res) {
         console.log(`Created entry for ${username}`);
         res.send({ status: true, msg: "player created" });
     };
+
+    
+
+    //populate highscoreArray
+    (async function populate() {
+        //start a new array
+        highscoreArray.length = 0;
+        
+        let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
+        for (let i=0; i<tempArray.length; i++) {
+            let name = tempArray[i]['name'];
+            let score = tempArray[i]['score'];
+            highscoreArray.push({ name: name, score: score })
+        };
+    })();
 });
 
 
 //serve up list of high scores
 app.get('/highscores', (req, res) => {
 
-    (async () => {
-        //populate highscoreArray
-        let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
-        for (let i=0; i<tempArray.length; i++) {
-            let name = tempArray[i]['name'];
-            let score = tempArray[i]['score'];
-            highscoreArray.push({ name: name, score: score })
+
+    
+    //fill a table with highscoreArray
+    result = '<table>';
+
+    for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
+        //for (let prop in highscoreArray[i]) {
+            result += "<tr><td>" + highscoreArray[i]['name'] + "</td><td>" + highscoreArray[i]['score'] + "</td></tr>";
+            //}
+    };
+    result += '</table>';
+
+    //append a button to go back home
+    result += '<input type="button" value="Go Back" id="goHome"/>';
+
+    //append an event listener for that button
+    result += "<script>document.querySelector('#goHome').addEventListener('click', () => goHome());"
+
+    //define the gohome function
+    result += "function goHome() {window.location.href = '/';};</script>"
 
 
-        }
-
-        //fill a table with highscoreArray
-        let result = '<table>';
-        for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
-            //for (let prop in highscoreArray[i]) {
-                result += "<tr><td>" + highscoreArray[i]['name'] + "</td><td>" + highscoreArray[i]['score'] + "</td></tr>";
-              //}
-        }
-        result += '</table>';
-
-        //append a button to go back home
-        result += '<input type="button" value="Go Back" id="goHome"/>';
-
-        //append an event listener for that button
-        result += "<script>document.querySelector('#goHome').addEventListener('click', () => goHome());"
-
-        //define the gohome function
-        result += "function goHome() {window.location.href = '/';};</script>"
-
-        res.send(result);
-      
-
-    })();
-
+    res.send(result);
 
 });
