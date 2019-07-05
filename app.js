@@ -45,7 +45,7 @@ let result;
 //method to post new score to leaderboard db
 app.post('/postScore', function (req, res) {
     let { username, score } = req.body,
-        validUser = /[!@#*()-=+\w][^\s]/;
+        validUser = /[!@#*()-=.,><+\w][^\s]/;
         
     
     if (!validUser.test(username)) {
@@ -54,7 +54,7 @@ app.post('/postScore', function (req, res) {
     } else {
         highscoreDB.insertOne({
             name: `${username}`,
-            score: `${score}`
+            score: parseInt(score, 10)
         });
 
         console.log(`Created entry for ${username}`);
@@ -68,7 +68,6 @@ app.post('/postScore', function (req, res) {
 app.get('/highscores', (req, res) => {
     //populate highscoreArray
     async function populate() {
-        //start a new array
         highscoreArray.length = 0;
         
         let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
@@ -78,8 +77,8 @@ app.get('/highscores', (req, res) => {
             highscoreArray.push({ name: name, score: score })
         };
     }
+    //serve highscoreArray
     populate().then ( () => {
-        //fill a table with highscoreArray
     result = '<table>';
 
     for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
