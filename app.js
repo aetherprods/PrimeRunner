@@ -37,20 +37,7 @@ app.use(express.static(path.join(__dirname, "/")));
 //serve front page
 app.get('/', (req, res) => {
     res.sendFile(__dirname + "/main.html");
-
-
-    //populate highscoreArray
-    (async function populate() {
-        //start a new array
-        highscoreArray.length = 0;
-        
-        let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
-        for (let i=0; i<tempArray.length; i++) {
-            let name = tempArray[i]['name'];
-            let score = tempArray[i]['score'];
-            highscoreArray.push({ name: name, score: score })
-        };
-    })();
+    
 });
 
 let result;
@@ -74,10 +61,13 @@ app.post('/postScore', function (req, res) {
         res.send({ status: true, msg: "player created" });
     };
 
-    
+});
 
+
+//serve up list of high scores
+app.get('/highscores', (req, res) => {
     //populate highscoreArray
-    (async function populate() {
+    async function populate() {
         //start a new array
         highscoreArray.length = 0;
         
@@ -87,16 +77,9 @@ app.post('/postScore', function (req, res) {
             let score = tempArray[i]['score'];
             highscoreArray.push({ name: name, score: score })
         };
-    })();
-});
-
-
-//serve up list of high scores
-app.get('/highscores', (req, res) => {
-
-
-    
-    //fill a table with highscoreArray
+    }
+    populate().then ( () => {
+        //fill a table with highscoreArray
     result = '<table>';
 
     for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
@@ -117,5 +100,7 @@ app.get('/highscores', (req, res) => {
 
 
     res.send(result);
+});
+
 
 });
