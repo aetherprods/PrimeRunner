@@ -5,31 +5,29 @@ const express = require('express'),
     mongodb = require('mongodb'),
     bodyParser = require('body-parser');
 
-//variables
-let port = process.env.PORT,
-    uri = process.env.MONGODB_URI,
-    database = process.env.DATABASE,
-    testuri = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb",
-    highscoreArray = [],
-    highscoreDB;
     
-
 //initializations
 require('dotenv').config();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));
 
+//variables
+let port = process.env.PORT,
+    database = process.env.DATABASE,
+    highscoreArray = [],
+    highscoreDB;
 
 //start the server
-app.listen(port, () => console.log("i am zord"));
+app.listen(port, () => console.log(`listening on port: ${port}`));
+
 
 //connect to the database
 (async () => {
-    db = await mongodb.MongoClient.connect(uri || testuri, { useNewUrlParser: true }, (err, client) => {
+    db = await mongodb.MongoClient.connect(process.env.MONGODB_URI, { useNewUrlParser: true }, (err, client) => {
         if(err) throw err;
         db = client.db(`${database}`);
         highscoreDB = db.collection('highscores');
-    });
+    });  
 })();
 
 //serve static resources
@@ -37,7 +35,10 @@ app.listen(port, () => console.log("i am zord"));
 app.use(express.static(path.join(__dirname, "/")));
 
 //serve front page
-app.get('/', (req, res) => {res.sendFile(__dirname + "/main.html")});
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + "/main.html");
+
+});
 
 //method to post new score to leaderboard db
 app.post('/postScore', function (req, res) {
@@ -59,9 +60,43 @@ app.post('/postScore', function (req, res) {
     };
 });
 
+
 //serve up list of high scores
-app.get('/getHighScore', (req, res) => {
-    //populate highscoreArray
-    highscoreDB.find().sort({ score: -1 }).toArray((err, result) => {highscoreArray = console.log(Array.from(result))});
-    res.send(highscoreArray);
+app.get('/highscores', (req, res) => {
+
+    (async () => {
+        //populate highscoreArray
+        let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
+        for (let i=0; i<tempArray.length; i++) {
+            let name = tempArray[i]['name'];
+            let score = tempArray[i]['score'];
+            highscoreArray.push({ name: name, score: score })
+
+
+        }
+
+        //fill a table with highscoreArray
+        let result = '<table>';
+        for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
+            //for (let prop in highscoreArray[i]) {
+                result += "<tr><td>" + highscoreArray[i]['name'] + "</td><td>" + highscoreArray[i]['score'] + "</td></tr>";
+              //}
+        }
+        result += '</table>';
+
+        //append a button to go back home
+        result += '<input type="button" value="Go Back" id="goHome"/>';
+
+        //append an event listener for that button
+        result += "<script>document.querySelector('#goHome').addEventListener('click', () => goHome());"
+
+        //define the gohome function
+        result += "function goHome() {window.location.href = '/';};</script>"
+
+        res.send(result);
+      
+
+    })();
+
+
 });

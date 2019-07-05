@@ -10,7 +10,7 @@ todo:
 
 $( document ).ready(function() {
     game = new primeGame();
-    timer = new countingTimer(300, game);
+    timer = new countingTimer(30, game);
     
     document.querySelector('#timer').textContent = timer.parse(timer.duration);
     document.querySelector('#startButton').addEventListener('click', () => gameStart());
@@ -96,9 +96,10 @@ primeGame.prototype.stopGame = function() {
 
     //post score to leaderboard
     $.post('/postScore', { "score": that.score, "username": that.username });
-    window.location.href 
-    //show high scores
+    
 
+    //show high scores
+    window.location.href = "/getHighScores";
     
     that.reinitializeValues();
     
