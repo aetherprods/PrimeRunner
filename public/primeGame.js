@@ -103,7 +103,8 @@ primeGame.prototype.stopGame = function() {
         url: '/postScore',
         data: { "score": that.score, "username": that.username },
         headers: { "cache-control": "no-cache" },
-        cache: false
+        cache: false,
+        async: true
       });
 
     //show high scores
