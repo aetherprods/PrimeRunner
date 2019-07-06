@@ -79,7 +79,7 @@ app.get('/highscores', (req, res) => {
     }
     //serve highscoreArray
     populate().then ( () => {
-    result = '<table>';
+    result = '<link href="public/main.css" rel="stylesheet" type="text/css"> <div class="absolute-center" align="center"><table>';
 
     for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
         //for (let prop in highscoreArray[i]) {
@@ -89,7 +89,7 @@ app.get('/highscores', (req, res) => {
     result += '</table>';
 
     //append a button to go back home
-    result += '<input type="button" value="Go Back" id="goHome"/>';
+    result += '<input type="button" value="Go Back" id="goHome"/></div>';
 
     //append an event listener for that button
     result += "<script>document.querySelector('#goHome').addEventListener('click', () => goHome());"
