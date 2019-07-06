@@ -105,7 +105,8 @@ primeGame.prototype.stopGame = function() {
         data: { "score": that.score, "username": that.username },
         async: true,
         cache: false,
-        headers: { "cache-control": "no-cache" }
+        headers: { "cache-control": "no-cache" },
+        'content-type': "application/json; charset=UTF-8"
       });
 
     //show high scores
