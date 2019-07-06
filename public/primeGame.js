@@ -9,8 +9,8 @@ todo:
 
 
 $( document ).ready(function() {
-    $('#game').css("height", $(document).height());
-
+    //$('#game').css("height", $(document).height());
+    
     game = new primeGame();
     timer = new countingTimer(300, game);
     
@@ -97,8 +97,14 @@ primeGame.prototype.stopGame = function() {
     that.username = window.prompt("Enter your username:");
 
     //post score to leaderboard
-    $.post('/postScore', { "score": that.score, "username": that.username, headers: { "cache-control": "no-cache" } });//header Cache Control is fix for iOS Safari
-    
+    //$.post('/postScore', { "score": that.score, "username": that.username, headers: { "cache-control": "no-cache" } });//header Cache Control is fix for iOS Safari
+    $.ajax({
+        type: "POST",
+        url: '/postScore',
+        data: { "score": that.score, "username": that.username },
+        headers: { "cache-control": "no-cache" },
+        cache: false
+      });
 
     //show high scores
     window.location.href = "/highscores";
