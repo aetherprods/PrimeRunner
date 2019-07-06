@@ -10,6 +10,7 @@ todo:
 
 $( document ).ready(function() {
     //$('#game').css("height", $(document).height());
+    $.ajaxSetup({ cache: false })
     
     game = new primeGame();
     timer = new countingTimer(300, game);
@@ -102,9 +103,9 @@ primeGame.prototype.stopGame = function() {
         type: "POST",
         url: '/postScore',
         data: { "score": that.score, "username": that.username },
-        headers: { "cache-control": "no-cache" },
+        async: true,
         cache: false,
-        async: true
+        headers: { "cache-control": "no-cache" }
       });
 
     //show high scores
