@@ -1,15 +1,4 @@
-/*
-todo:
--fix timer math so that i can feed it seconds
--
-
-*/
-//const $ = require('jquery');
-
-
-
 $( document ).ready(function() {
-    //$('#game').css("height", $(document).height());
     $.ajaxSetup({ cache: false })
     
     game = new primeGame();
@@ -65,7 +54,7 @@ countingTimer.prototype.parse = function(time) {
         let minutes = time/600 | 0;
         let seconds = time%600 | 0;
         time = "0" + minutes + ":" + "0" + seconds.toString(10).slice(0,2) + seconds.toString(10).slice(2)
-    } else if (time <= 600) {
+    } else if (time <= 600 && time >= 100) {
         time = time.toString(10).slice(0,2) + ":" + time.toString(10).slice(2) + "0";
     } else if (time < 100) {
         time = "0" + time.toString(10).slice(0,1) + ":" + time.toString(10).slice(1) + "0";
@@ -98,7 +87,6 @@ primeGame.prototype.stopGame = function() {
     that.username = window.prompt("Enter your username:");
 
     //post score to leaderboard
-    //$.post('/postScore', { "score": that.score, "username": that.username, headers: { "cache-control": "no-cache" } });//header Cache Control is fix for iOS Safari
     async function postScore() {
         await $.ajax({
             type: "POST",
@@ -114,8 +102,6 @@ primeGame.prototype.stopGame = function() {
         window.location.href = "/highscores"; //show high scores only after POST
     });
 
-    
-    
     
     that.reinitializeValues();
     
@@ -185,9 +171,7 @@ primeGame.prototype.newPrime = function() {
         that.newPrime();
     } else if ((that.primeContestant % 5 == 0)) {
         that.newPrime();
-    } /*else if ((that.primeContestant % 7 == 0)) {
-        that.newPrime();
-    } */
+    }
     document.getElementById("primer").innerHTML = that.primeContestant;
 }
 

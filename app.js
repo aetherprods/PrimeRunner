@@ -79,9 +79,9 @@ app.get('/highscores', (req, res) => {
     }
     //serve highscoreArray
     populate().then ( () => {
-    result = '<link href="public/main.css" rel="stylesheet" type="text/css"> <div class="absolute-center" align="center"><table>';
+    result = '<link href="public/main.css" rel="stylesheet" type="text/css"> <div class="absolute-center" align="center"><h1>Top 10 Scores</h1><table>';
 
-    for (let i=0; i<highscoreArray.length; i++) {//change highscorearray.length to, say, 9, to give top 10 scores
+    for (let i=0; i<10; i++) {//change highscorearray.length to, say, 10, to give top 10 scores
         //for (let prop in highscoreArray[i]) {
             result += "<tr><td>" + highscoreArray[i]['name'] + "</td><td>" + highscoreArray[i]['score'] + "</td></tr>";
             //}
