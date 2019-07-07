@@ -99,17 +99,20 @@ primeGame.prototype.stopGame = function() {
 
     //post score to leaderboard
     //$.post('/postScore', { "score": that.score, "username": that.username, headers: { "cache-control": "no-cache" } });//header Cache Control is fix for iOS Safari
-    
-    $.ajax({
-        type: "POST",
-        url: '/postScore',
-        data: { "score": that.score, "username": that.username },
-        async: true,
-        cache: false,
-        headers: { "cache-control": "no-cache" },
-        'content-type': "application/json"
-      })
-      .then(window.location.href = "/highscores"); //show high scores only after POST
+    async function postScore() {
+        await $.ajax({
+            type: "POST",
+            url: '/postScore',
+            data: { "score": that.score, "username": that.username },
+            async: true,
+            cache: false,
+            headers: { "cache-control": "no-cache" },
+            'content-type': "application/json"
+        });
+    }
+    postScore().then( () => {
+        window.location.href = "/highscores"; //show high scores only after POST
+    });
 
     
     
