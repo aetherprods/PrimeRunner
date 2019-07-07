@@ -99,6 +99,7 @@ primeGame.prototype.stopGame = function() {
 
     //post score to leaderboard
     //$.post('/postScore', { "score": that.score, "username": that.username, headers: { "cache-control": "no-cache" } });//header Cache Control is fix for iOS Safari
+    
     $.ajax({
         type: "POST",
         url: '/postScore',
@@ -106,11 +107,12 @@ primeGame.prototype.stopGame = function() {
         async: true,
         cache: false,
         headers: { "cache-control": "no-cache" },
-        'content-type': "application/json; charset=UTF-8"
-      });
+        'content-type': "application/json"
+      })
+      .then(window.location.href = "/highscores"); //show high scores only after POST
 
-    //show high scores
-    window.location.href = "/highscores";
+    
+    
     
     that.reinitializeValues();
     
@@ -172,7 +174,9 @@ primeGame.prototype.submitAnswer = function(answer) {
 primeGame.prototype.newPrime = function() {
     let that = this;
     that.primeContestant = Math.floor(Math.random() * 2500);
-    if (that.primeContestant % 2 == 0) {
+    if (that.primeContestant == 1) {
+        that.newPrime();
+    } else if (that.primeContestant % 2 == 0) {
         that.newPrime();
     } else if ((that.primeContestant % 3 == 0)) {
         that.newPrime();
