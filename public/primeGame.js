@@ -87,19 +87,25 @@ primeGame.prototype.stopGame = function() {
     that.username = window.prompt("Enter your username:");
 
     //post score to leaderboard
-    async function postScore() {
-        await $.ajax({
-            type: "POST",
-            url: '/postScore',
-            data: { "score": that.score, "username": that.username },
-            async: true,
-            cache: false,
-            headers: { "cache-control": "no-cache" },
-            'content-type': "application/json"
-        });
-    }
-    postScore().then( () => {
+    let postScore = new Promise((resolve, reject) => {
+        let post = $.ajax({
+                        type: "POST",
+                        url: '/postScore',
+                        data: { "score": that.score, "username": that.username },
+                        async: true,
+                        cache: false,
+                        headers: { "cache-control": "no-cache" },
+                        'content-type': "application/json"
+                    });
+        resolve (post);
+    
+    });
+    postScore.then( (successMessage) => {
+        console.log(successMessage);
         window.location.href = "/highscores"; //show high scores only after POST
+    });
+    postScore.catch( (error) => {
+        console.log(error);
     });
 
     

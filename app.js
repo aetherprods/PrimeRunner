@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 //variables
 let port = process.env.PORT,
     database = process.env.DATABASE,
-    highscoreArray = [],
+    //highscoreArray = [],
     highscoreDB;
 
 //start the server
@@ -67,39 +67,45 @@ app.post('/postScore', function (req, res) {
 //serve up list of high scores
 app.get('/highscores', (req, res) => {
     //populate highscoreArray
-    async function populate() {
-        highscoreArray.length = 0;
-        
-        let tempArray = await highscoreDB.find().sort({ score: -1 }).toArray();
+    let populate = new Promise ((resolve, reject) => {
+        let tempArray = highscoreDB.find().sort({ score: -1 }).toArray();
+        resolve(tempArray);
+    });
+    populate.then ((tempArray) => {
+        let highscoreArray = [];
+
         for (let i=0; i<tempArray.length; i++) {
             let name = tempArray[i]['name'];
             let score = tempArray[i]['score'];
             highscoreArray.push({ name: name, score: score })
         };
-    }
+    });
     //serve highscoreArray
-    populate().then ( () => {
-    result = '<link href="public/main.css" rel="stylesheet" type="text/css"> <div class="absolute-center" align="center"><h1>Top 10 Scores</h1><table>';
+    populate.then ( (highscoreArray) => {
+        result = '<link href="public/main.css" rel="stylesheet" type="text/css"> <div class="absolute-center" align="center"><h1>Top 10 Scores</h1><table>';
 
-    for (let i=0; i<10; i++) {//change highscorearray.length to, say, 10, to give top 10 scores
-        //for (let prop in highscoreArray[i]) {
-            result += "<tr><td>" + highscoreArray[i]['name'] + "</td><td>" + highscoreArray[i]['score'] + "</td></tr>";
-            //}
-    };
-    result += '</table>';
+        for (let i=0; i<10; i++) {//change highscorearray.length to, say, 10, to give top 10 scores
+            //for (let prop in highscoreArray[i]) {
+                result += "<tr><td>" + highscoreArray[i]['name'] + "</td><td>" + highscoreArray[i]['score'] + "</td></tr>";
+                //}
+        };
+        result += '</table>';
 
-    //append a button to go back home
-    result += '<input type="button" value="Go Back" id="goHome"/></div>';
+        //append a button to go back home
+        result += '<input type="button" value="Go Back" id="goHome"/></div>';
 
-    //append an event listener for that button
-    result += "<script>document.querySelector('#goHome').addEventListener('click', () => goHome());"
+        //append an event listener for that button
+        result += "<script>document.querySelector('#goHome').addEventListener('click', () => goHome());"
 
-    //define the gohome function
-    result += "function goHome() {window.location.href = '/';};</script>"
+        //define the gohome function
+        result += "function goHome() {window.location.href = '/';};</script>"
 
 
-    res.send(result);
-});
+        res.send(result);
+    });
+    populate.catch( (error) => {
+        console.log(error);
+    });
 
 
 });
